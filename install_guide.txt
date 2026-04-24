@@ -1,0 +1,29 @@
+TEMP SENSOR PROJECT INSTALLATION GUIDE
+
+Step 1. Install Git (if not installed) sudo apt update sudo apt install
+git -y
+
+Step 2. Clone repository git clone git@github.com:USERNAME/REPO.git cd
+REPO
+
+Step 3. Create .env file nano .env
+
+Add your credentials: EMAIL_USER=your_email EMAIL_PASS=your_password
+
+Step 4. Run installation script chmod +x install.sh ./install.sh
+
+Step 5. Check services sudo systemctl status dht.service sudo systemctl
+status watchdog.service
+
+Step 6. Enable autostart (if needed) sudo systemctl enable dht.service
+sudo systemctl enable watchdog.service
+
+Step 7. Useful commands
+
+Restart services: sudo systemctl restart dht.service sudo systemctl
+restart watchdog.service
+
+View logs: journalctl -u dht.service -f journalctl -u watchdog.service
+-f
+
+Done.
