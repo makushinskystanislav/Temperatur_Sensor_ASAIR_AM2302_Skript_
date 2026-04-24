@@ -1,0 +1,12 @@
+[Unit]
+Description=Watchdog Service
+After=network.target
+
+[Service]
+ExecStart=/home/pi/temp_sensor_project/venv/bin/python /home/pi/temp_sensor_project/watchdog.py
+WorkingDirectory=/home/pi/temp_sensor_project
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
