@@ -3,3 +3,5 @@ logs/
 venv/
 __pycache__/
 *.pyc
+shh_key
+shh_key.pub
