@@ -3,8 +3,8 @@ Description=Temperature Sensor
 After=network.target
 
 [Service]
-ExecStart=/home/pi/temp_sensor_project/venv/bin/python /home/pi/temp_sensor_project/sensor.py
-WorkingDirectory=/home/pi/temp_sensor_project
+ExecStart=/home/pi/Desktop/Temperatur_Sensor_ASAIR_AM2302_Skript_/venv/bin/python /home/pi/Desktop/Temperatur_Sensor_ASAIR_AM2302_Skript_/temp_monitor.py
+WorkingDirectory=/home/pi/Desktop/Temperatur_Sensor_ASAIR_AM2302_Skript_
 Restart=always
 User=pi
 

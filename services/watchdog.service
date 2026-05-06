@@ -1,10 +1,10 @@
 [Unit]
 Description=Watchdog Service
-After=network.target
+After=network.target dht.service
 
 [Service]
-ExecStart=/home/pi/temp_sensor_project/venv/bin/python /home/pi/temp_sensor_project/watchdog.py
-WorkingDirectory=/home/pi/temp_sensor_project
+ExecStart=/home/pi/Desktop/Temperatur_Sensor_ASAIR_AM2302_Skript_/venv/bin/python /home/pi/Desktop/Temperatur_Sensor_ASAIR_AM2302_Skript_/watchdog.py
+WorkingDirectory=/home/pi/Desktop/Temperatur_Sensor_ASAIR_AM2302_Skript_
 Restart=always
 User=pi
 
