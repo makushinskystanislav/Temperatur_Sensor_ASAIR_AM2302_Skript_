@@ -54,7 +54,7 @@ RETRY_DELAY     = 5        # extra pause after a failed read before the next att
 
 # ── Temperature thresholds (°C) ───────────────────────────
 WARNING_TEMP   = 28        # sustained above this → WARNING alert
-CRITICAL_TEMP  = 20        # sustained above this → CRITICAL alert
+CRITICAL_TEMP  = 32        # sustained above this → CRITICAL alert
 EMERGENCY_TEMP = 40        # immediately triggers EMERGENCY alert
 
 # ── Humidity threshold (%) ────────────────────────────────
@@ -64,7 +64,7 @@ HUMIDITY_ALERT = 70        # single reading above this → HUMIDITY alert
 # Temperature must stay in the danger zone for this long before an alert fires.
 # Prevents false alarms from brief spikes that pass the spike filter.
 WARNING_TIME  = 600        # 10 minutes for WARNING
-CRITICAL_TIME = 60        # 3 minutes for CRITICAL
+CRITICAL_TIME = 180        # 3 minutes for CRITICAL
 
 # ── Spike filter ──────────────────────────────────────────
 # A single reading that jumps more than these deltas from the previous
