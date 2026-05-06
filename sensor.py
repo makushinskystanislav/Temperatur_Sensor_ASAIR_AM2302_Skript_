@@ -54,7 +54,7 @@ RETRY_DELAY     = 5        # extra pause after a failed read before the next att
 
 # ── Temperature thresholds (°C) ───────────────────────────
 WARNING_TEMP   = 28        # sustained above this → WARNING alert
-CRITICAL_TEMP  = 32        # sustained above this → CRITICAL alert
+CRITICAL_TEMP  = 20        # sustained above this → CRITICAL alert
 EMERGENCY_TEMP = 40        # immediately triggers EMERGENCY alert
 
 # ── Humidity threshold (%) ────────────────────────────────
@@ -63,8 +63,8 @@ HUMIDITY_ALERT = 70        # single reading above this → HUMIDITY alert
 # ── Sustained-condition timers ────────────────────────────
 # Temperature must stay in the danger zone for this long before an alert fires.
 # Prevents false alarms from brief spikes that pass the spike filter.
-WARNING_TIME  = 600        # seconds for WARNING
-CRITICAL_TIME = 300        # seconds for CRITICAL
+WARNING_TIME  = 600        # 10 minutes for WARNING
+CRITICAL_TIME = 60        # 3 minutes for CRITICAL
 
 # ── Spike filter ──────────────────────────────────────────
 # A single reading that jumps more than these deltas from the previous
@@ -169,7 +169,7 @@ def log_error(message: str) -> None:
 # EMAIL
 # ==========================================================
 
-def send_email(subject: str, body: str) -> None:
+def send_email(subject: str, body: str, log_subject: str = "") -> None:
     """Send an alert email with today's log files attached.
 
     Attaches both the temperature log and the error log so the recipient
@@ -201,7 +201,7 @@ def send_email(subject: str, body: str) -> None:
             server.login(EMAIL_SENDER, EMAIL_PASSWORD)
             server.send_message(msg)
 
-        log_temp(f"EMAIL SENT: {log_subject}")
+        log_temp(f"EMAIL SENT: {log_subject or subject}")
 
     except Exception as e:
         log_error(f"EMAIL ERROR: {e}")
@@ -316,7 +316,7 @@ def send_alert(temp: float, hum: float, level: str) -> None:
 
     if level == "HUMIDITY":
         if _should_send_humidity():
-            send_email(subject, _build_alert_body(temp, hum, subject))
+            send_email(subject, _build_alert_body(temp, hum, subject), log_subject)
             _mark_humidity_sent()
         else:
             log_temp("ALERT SUPPRESSED (humidity already sent today)")
@@ -324,7 +324,7 @@ def send_alert(temp: float, hum: float, level: str) -> None:
 
     # All temperature levels go through the same escalation-aware gate
     if _should_send_temp(level):
-        send_email(subject, _build_alert_body(temp, hum, subject))
+        send_email(subject, _build_alert_body(temp, hum, subject), log_subject)
         _mark_temp_sent(level)
     else:
         log_temp(f"ALERT SUPPRESSED (already sent at >= {level} today)")
